@@ -617,17 +617,17 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 	bible_short_name := ""
 
 	switch reg.ReplaceAllString(text, "$1"){
-	case "轉傳","分享":
+	case "w1","分享":
 		print_string = "轉傳"
 	case "產品列表":
 		print_string = "產品列表"
-	case "營業時間":
+	case "w2":
 		print_string = "營業時間"
 	case "週報","周報","最新訊息","本周資訊","本週資訊":
 		print_string = "週報"
-	case "聯絡資訊":
+	case "w3":
 		print_string = "聯絡資訊"
-	case "地圖","住址","單位地圖","麵包店","地址":
+	case "w4","住址","單位地圖","麵包店","地址":
 		print_string = "地圖"
 	case "機器人88":
 		print_string = "機器人88"
@@ -641,7 +641,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 		print_string = "簡介"
 	case "開發者","admin","Admin","ａｄｍｉｎ","意見回饋":
 		print_string = "開發者"
-	case "台語聖經巴克禮全羅":
+	case "w5":
 		log.Print(reg.ReplaceAllString(text, "$3"))
 		switch reg.ReplaceAllString(text, "$3") {
 			case "Rev","Revelation","啟","啟示","啟示錄","Re","re","ｒｅ","Ｒｅ","rev","Откровение ап. Иоанна Богослова (Апокалипсис)","Khải-huyền","ヨハネの黙示録","黙示録","요한계시록":
@@ -803,7 +803,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 			// end += getGOGOGO('猶','猶大書','Jude,猶,猶大,猶大書,jude,Послание Иуды,Giu-đe,ユダの手紙,ユダ,유다서') + getGOGOGO('啟','啟示錄','Rev,Revelation,啟,啟示,啟示錄,Re,re,ｒｅ,Ｒｅ,rev,Откровение ап. Иоанна Богослова (Апокалипсис),Khải-huyền,ヨハネの黙示録,黙示録,요한계시록');	//66
 			// console.info(end);
 		//----JavaScript 偷吃步法
-		log.Print(reg.ReplaceAllString(text, "$3"))
+		log.Print(reg.ReplaceAllString(text, "d25"))
 		switch reg.ReplaceAllString(text, "$3") {
 			case "Gen","Genesis","創","創世","創世紀","創世記","Ge","ge","gen","창세기","Sáng-thế Ký","Бытие":
 				bible_short_name = "創"
@@ -846,7 +846,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				// if bible_text_string != ""{
 				// 	print_string = "[創世紀 " + chap_string + " : " +  sec_string + "]\n" + bible_text_string
 				// }
-			case "聖經","bible","Bible":
+			case "d24","bible","Bible":
 				print_string = "聖經"
 			default:
 				//print_string = "你是要找 " +  reg.ReplaceAllString(text, "$3") + " 對嗎？\n對不起，我還沒學呢...\n"
@@ -928,11 +928,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		userImageUrl := ""
 																				//userLogo_url := ""
 		switch target_id_code{
-			case "U6f738a70b63c5900aa2c0cbbe0af91c4":
+			case "ub5e4ae027d8d4a82736222b2a8dc77df":
 				username = "LL"
 			case "U0a8152d2cea8c981aa2436a0ab596bca":
 				username = "K"
-			case "Uf150a9f2763f5c6e18ce4d706681af7f":
+			case "ub5e4ae027d8d4a82736222b2a8dc77df":
 				username = "包包"
 			case "Ca78bf89fa33b777e54b4c13695818f81":
 				username = "測試用全開群組 test"
@@ -1013,14 +1013,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		LineTemplate_CarouselColumn_bible_list := linebot.NewCarouselColumn(
-			Bible_imageURL, "聖經", "聖經查詢功能",
+			Bible_imageURL, "d24", "聖經查詢功能",
 			linebot.NewPostbackTemplateAction("如何用我查聖經","如何查詢聖經","聖經"),
 			linebot.NewPostbackTemplateAction("舊約列表","舊約列表","舊約列表"),
 			linebot.NewPostbackTemplateAction("新約列表","新約列表","新約列表"),
 		)
 
 		LineTemplate_CarouselColumn_bible_one := linebot.NewCarouselColumn(
-			Bible_imageURL, "主題經文", "依照主題隨機抽取經文！",
+			Bible_imageURL, "d23", "依照主題隨機抽取經文！",
 			linebot.NewURITemplateAction("隨機主題", "http://tool.ccnda.net/qr/view.jsp?ID=0"),
 			linebot.NewURITemplateAction("解決問題的經文", "http://tool.ccnda.net/qr/view.jsp?ID=1779"),
 			linebot.NewURITemplateAction("更多主題選擇", "http://tool.ccnda.net/qr/index.jsp"),
@@ -1028,14 +1028,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 		LineTemplate_firstinfo := linebot.NewCarouselTemplate(
 			linebot.NewCarouselColumn(
-				imageURL, "我是公館教會的小天使", "我可以幫大家取得教會資訊。\n可以邀我進群組方便更多人使用。這是一種資訊整合的便捷應用。",
+				imageURL, "d21", "我可以幫大家取得教會資訊。\n可以邀我進群組方便更多人使用。這是一種資訊整合的便捷應用。",
 				linebot.NewPostbackTemplateAction("本週週報 & 聚會時間", "週報 POST","週報"),
 				linebot.NewPostbackTemplateAction("交通資訊","地圖 POST", "教會地圖"),
 				linebot.NewPostbackTemplateAction("聯絡資訊","聯絡資訊 POST", "聯絡資訊"),
 			),
 			LineTemplate_CarouselColumn_bible_list,
 			linebot.NewCarouselColumn(
-				Bible_imageURL, "聖經查詢方法", "以下是示範。\n也可以手動輸入試試看各種組合。",
+				Bible_imageURL, "d22", "以下是示範。\n也可以手動輸入試試看各種組合。",
 				linebot.NewPostbackTemplateAction("聖經 創世紀 5：5","聖經 創世紀 5：5","聖經 創世紀 5：5"),
 				linebot.NewPostbackTemplateAction("英文聖經 出埃及 1：4-5","英文聖經 出埃及 1：4-5","英文聖經 出埃及 1：4-5"),
 				linebot.NewPostbackTemplateAction("多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5"),
@@ -1063,13 +1063,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		LineTemplate_nextweek_review := linebot.NewCarouselTemplate(
 
 			linebot.NewCarouselColumn(
-				Bible_imageURL, "下週經文預習", "以下是下週（2017/01/15）的經文",
+				Bible_imageURL, "d19", "以下是下週（2017/01/15）的經文",
 				linebot.NewPostbackTemplateAction("台語禮拜 何西阿書 2:16-23","第一場預習","聖經 何西阿書 2:16-23"),
 				linebot.NewPostbackTemplateAction("華語禮拜 何西阿書 12:7-14","第二場預習","聖經 何西阿書 12:7-14"),
 				linebot.NewMessageTemplateAction("瞭解聖經查詢方法","聖經"),
 			),
 			linebot.NewCarouselColumn(
-				Bible_imageURL, "聖經查詢方法", "以下是示範。\n也可以手動輸入試試看各種組合。",
+				Bible_imageURL, "d20", "以下是示範。\n也可以手動輸入試試看各種組合。",
 				linebot.NewPostbackTemplateAction("聖經 創世紀 5：5","聖經 創世紀 5：5","聖經 創世紀 5：5"),
 				linebot.NewPostbackTemplateAction("英文聖經 出埃及 1：4","英文聖經 出埃及 1：4","英文聖經 出埃及 1：4"),
 				linebot.NewPostbackTemplateAction("多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5"),
@@ -1103,7 +1103,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 				// }
 
-				if event.Postback.Data == "取得發訊息給老闆的提示"{
+				if event.Postback.Data == "d18"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("請手動輸入「給老闆：」開頭，後面接上你想給老闆的話即可。\n\n發出後會立即送出。\n如需要回覆，\n請在訊息文字中也附上您的聯絡方式，謝謝！")).Do(); err != nil {
 							log.Print(507)
 							log.Print(err)
@@ -1112,21 +1112,21 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 				
 
-				if event.Postback.Data == "週報"{
+				if event.Postback.Data == "d17"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("本週教會電子週報從缺\n這只是示範效果可以如何展示"),obj_message_week_2,obj_message_week_3,linebot.NewTextMessage(next_week_msg),obj_message_nextweek_review).Do(); err != nil {
 							log.Print(486)
 							log.Print(err)
 					}
 				}
 
-				if event.Postback.Data == "聚會時間"{
+				if event.Postback.Data == "d16"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(weektime_msg)).Do(); err != nil {
 							log.Print(493)
 							log.Print(err)
 					}
 				}
 
-				if event.Postback.Data == "其他本週公告"{
+				if event.Postback.Data == "d15"{
 					obj_message := linebot.NewStickerMessage("2", "514") //https://devdocs.line.me/en/?go#send-message-object
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("暫無"),obj_message).Do(); err != nil {
 							log.Print(500)
@@ -1134,7 +1134,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 
-				if event.Postback.Data == "電子郵件"{
+				if event.Postback.Data == "d14"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("教會 E-mail 信箱地址：\nkkcpct@ms29.hinet.net")).Do(); err != nil {
 							log.Print(507)
 							log.Print(err)
@@ -1173,9 +1173,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 
-				if event.Postback.Data == "開啟管理者選單"{
+				if event.Postback.Data == "d13"{
 					switch target_id_code {
-						case "U6f738a70b63c5900aa2c0cbbe0af91c4":
+						case "ub5e4ae027d8d4a82736222b2a8dc77df":
 							imageURL = SystemImageURL
 							LineTemplate_test := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -1208,7 +1208,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//2017.01.03+
 				if event.Postback.Data == "admin"{
 					switch target_id_code {
-						case "U6f738a70b63c5900aa2c0cbbe0af91c4":
+						case "ub5e4ae027d8d4a82736222b2a8dc77df":
 							imageURL = SystemImageURL
 							LineTemplate_test := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -1235,7 +1235,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 
-				if event.Postback.Data == "登出管理者"{
+				if event.Postback.Data == "d12"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你已登出管理模式")).Do(); err != nil {
 						log.Print(1965)
 						log.Print(err)
@@ -1247,7 +1247,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 
 
-				if event.Postback.Data == "取消離開群組"{
+				if event.Postback.Data == "d11"{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你已經取消請我離開 :)")).Do(); err != nil {
 						log.Print(1207)
 						log.Print(err)
@@ -1255,7 +1255,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 
 				//2016.12.26+
-				if event.Postback.Data == "按下確定離開群組對話"{
+				if event.Postback.Data == "d10"{
 					template := linebot.NewCarouselTemplate(
 						linebot.NewCarouselColumn(
 							SystemImageURL, "請機器人離開群組", "你確定要請我離開嗎QAQ？\n如果確定請按下方按鈕 QQ",
@@ -1272,7 +1272,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 
-				if event.Postback.Data == "離開群組"{
+				if event.Postback.Data == "d9"{
 					if target_item == "群組對話" {
 						if _, err := bot.LeaveGroup(target_id_code).Do(); err != nil {
 							log.Print(1233)
@@ -1299,10 +1299,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				obj_message := linebot.NewTemplateMessage(t_msg, LineTemplate_firstinfo)
 
 				// username := ""
-				// if target_id_code == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+				// if target_id_code == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 				// 	username = "LL"
 				// }
-				// if target_id_code == "Uf150a9f2763f5c6e18ce4d706681af7f"{
+				// if target_id_code == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 				// 	username = "包包"
 				// }
 				//reply 的寫法
@@ -1387,7 +1387,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				bible_sec := ""
 				bible_short_name := ""
 
-				if bot_msg != "已經傳送給老闆"{
+				if bot_msg != "d8"{
 					//bible()
 					//bot_msg, bible_chap, bible_sec, bible_short_name := bible(message.Text,target_id_code,"")//bot_msg = bible(message.Text,message.ID,"")
 					bot_msg, bible_chap, bible_sec, bible_short_name = bible(bot_msg,target_id_code,"")//bot_msg = bible(message.Text,message.ID,"")
@@ -1396,10 +1396,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				bible_id := "0"
 				//bible_com_text :=""
 				switch bible_short_name {
-					case "創":
+					case "1":
 						bible_id = "1"
 						//bible_com_text = "gen"
-					case "出":
+					case "d1":
 						bible_id = "2"
 						//bible_com_text = "ex"
 					case "利":
@@ -1414,7 +1414,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					case "書":
 						bible_id = "6"
 						//bible_com_text = "jos"
-					case "士":
+					case "d2":
 						bible_id = "7"
 						//bible_com_text = "jdg"
 					case "得":
@@ -1429,7 +1429,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					case "王上":
 						bible_id = "11"
 						//bible_com_text = "1ki"
-					case "王下":
+					case "d3":
 						bible_id = "12"
 						//bible_com_text = "2ki"
 					case "代上":
@@ -1447,10 +1447,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					case "斯":
 						bible_id = "17"
 						//bible_com_text = "est"
-					case "伯":
+					case "d4":
 						bible_id = "18"
 						//bible_com_text = "job"
-					case "詩":
+					case "d5":
 						bible_id = "19"
 						//bible_com_text = "psa"
 					case "箴":
@@ -1658,7 +1658,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							// }
 							switch username{
 							case "LL":
-								if target_id_code == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+								if target_id_code == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 									// imageURL = SystemImageURL
 									template := linebot.NewConfirmTemplate(
 										"驗證成功！\n要現在進入管理介面嗎？",
@@ -1673,8 +1673,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								}
 							}
 							return
-						case "測試":
-							if target_id_code == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+						case "s18":
+							if target_id_code == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 								imageURL = SystemImageURL
 								LineTemplate_test := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
@@ -1695,7 +1695,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								}
 							}
 							return
-						case "地圖":
+						case "s17":
 							imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							LineTemplate_test := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -1723,7 +1723,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								log.Print(err)
 							}
 							return
-						case "開發者":
+						case "s16":
 							bot_msg = "你找我的製造者？OK！\n我跟你講我的夥伴喵在哪，你去加他。\n他跟製造者很親近的，跟他說的話製造者都會看到。\nhttps://line.me/R/ti/p/%40uwk0684z\n\n\n你也可以從下面這個連結直接去找開發者線上對話。\n\n如果他不在線上一樣可以留言給他，\n他會收到的！\n這跟手機、電腦桌面軟體都有同步連線。" +
 							"\n\nhttp://www.smartsuppchat.com/widget?key=77b943aeaffa11a51bb483a816f552c70e322417&vid=" + target_id_code +
 							"&lang=tw&pageTitle=%E9%80%99%E6%98%AF%E4%BE%86%E8%87%AA%20LINE%40%20%E9%80%B2%E4%BE%86%E7%9A%84%E5%8D%B3%E6%99%82%E9%80%9A%E8%A8%8A"
@@ -1894,7 +1894,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								// 	log.Print(err)
 								// }
 							return
-						case "行事曆":
+						case "s15":
 						    imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							template := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -1919,7 +1919,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "聚會時間":
+						case "s14":
 						    imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							template := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -1944,13 +1944,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "圖書查詢":
+						case "s13":
 							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你想找教會相關的圖書是嗎？\n\n這裡推薦使用以下綜合查詢系統查詢各教會相關單位館藏！\nhttp://ttlib.fhl.net")).Do(); err != nil {
 									log.Print(15083)
 									log.Print(err)
 							}
 							return
-						case "查詢可用簡寫":
+						case "s12":
 							log.Print("有走進 查詢可用簡寫")
 						    imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							template := linebot.NewCarouselTemplate(
@@ -2053,13 +2053,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "週報":
+						case "s11":
 							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("本週教會電子週報從缺\n這只是示範效果可以如何展示"),obj_message_week_2,obj_message_week_3,linebot.NewTextMessage(next_week_msg),obj_message_nextweek_review).Do(); err != nil {
 									log.Print(7161)
 									log.Print(err)
 							}
 							return
-						case "聯絡資訊":
+						case "s10":
 						    imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							template := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -2089,7 +2089,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "網站資訊":
+						case "s9":
 						    imageURL = "https://trello-attachments.s3.amazonaws.com/52ff05f27a3c676c046c37f9/585e3fb981c1240b4df88d73/34fba56ed5cbb5d7f0a9d7d2543ff238/C02018kong-koan_8481.JPG"
 							template := linebot.NewCarouselTemplate(
 								linebot.NewCarouselColumn(
@@ -2121,7 +2121,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "選單":
+						case "s8":
 						    imageURL = SystemImageURL
 							//template := LineTemplate_firstinfo
 							t_msg := "建議使用最新版本的 LINE APP 以獲得最佳互動介面體驗。\n" +
@@ -2156,19 +2156,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									log.Print(err)
 							}
 							return
-						case "轉傳":
+						case "s7":
 							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("歡迎大家介紹 台北公館教會小天使 給更多人使用！\nhttps://line.me/R/ti/p/@bls5027d\n\n你可以將這則文字訊息轉傳給其他對象。"),linebot.NewTextMessage("這是一種資訊整合的便捷應用，效果類似於自動回話小助理。\n\n概念上最基本的應用類似於遊戲 NPC 或 0800 電話總機，會根據指示自動回覆相關基本資訊。\n也可做其他延伸應用，像是聖經查詢 或 留言給意見...等等。\n\n目前除了教會相關資訊外，還可查詢 24 本聖經。\n支援 10 種語言、24 種聖經版本的精準經節查詢機能。\n並支援範圍查詢的寫法。（例如：聖經 創世紀 1:1-10）\n\n詳細說明可輸入「聖經」，有完整的使用說明介紹。")).Do(); err != nil {
 									log.Print(7285)
 									log.Print(err)
 							}
 							return
-						case "已經傳送給老闆":
+						case "s6":
 							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("已經幫你把意見傳送給老闆囉！\n如需教會對您進行回覆，\n請補上個人聯絡資訊（mail 或其他）再發送一次！謝謝！"),linebot.NewStickerMessage("2", "514")).Do(); err != nil {
 									log.Print(15391)
 									log.Print(err)
 							}
 							return
-						case "機器人88":
+						case "s5":
 							if target_item == "群組對話" {
 								log.Print("觸發離開群組，APP 限定")
 								//post KEY = 離開群組
@@ -2185,7 +2185,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								}
 							}
 							return
-						case "新約列表":
+						case "s4":
 								// new_list := "【福音書】\n" +
 								// 			"\n" +
 								// 			"馬太福音\n" +
@@ -2230,19 +2230,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								imageURL = Bible_imageURL
 								LineTemplate_old1 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "福音書",
+										imageURL, "s3", "福音書",
 										linebot.NewPostbackTemplateAction("馬太福音", "馬太福音", "聖經 馬太福音 1:1"),
 										linebot.NewPostbackTemplateAction("馬可福音", "馬可福音", "聖經 馬可福音 1:1"),
 										linebot.NewPostbackTemplateAction("路加福音", "路加福音", "聖經 路加福音 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "福音書(1) + 新約歷史書(1) + 保羅書信",
+										imageURL, "s2", "福音書(1) + 新約歷史書(1) + 保羅書信",
 										linebot.NewPostbackTemplateAction("約翰福音", "約翰福音", "聖經 約翰福音 1:1"),
 										linebot.NewPostbackTemplateAction("使徒行傳", "使徒行傳", "聖經 使徒行傳 1:1"),
 										linebot.NewPostbackTemplateAction("羅馬書", "羅馬書", "聖經 羅馬書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "保羅書信",
+										imageURL, "s1", "保羅書信",
 										linebot.NewPostbackTemplateAction("哥林多前書", "哥林多前書", "聖經 哥林多前書 1:1"),
 										linebot.NewPostbackTemplateAction("哥林多後書", "哥林多後書", "聖經 哥林多後書 1:1"),
 										linebot.NewPostbackTemplateAction("加拉太書", "加拉太書", "聖經 加拉太書 1:1"),
@@ -2264,7 +2264,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								imageURL = Bible_imageURL
 								LineTemplate_old2 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "保羅書信",
+										imageURL, "a10", "保羅書信",
 										linebot.NewPostbackTemplateAction("以弗所書", "以弗所書", "聖經 以弗所書 1:1"),
 										linebot.NewPostbackTemplateAction("腓立比書", "腓立比書", "聖經 腓立比書 1:1"),
 										linebot.NewPostbackTemplateAction("歌羅西書", "歌羅西書", "聖經 歌羅西書 1:1"),
@@ -2302,19 +2302,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								imageURL = Bible_imageURL
 								LineTemplate_old3 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "其他書信",
+										imageURL, "a11", "其他書信",
 										linebot.NewPostbackTemplateAction("希伯來書", "希伯來書", "聖經 希伯來書 1:1"),
 										linebot.NewPostbackTemplateAction("雅各書", "雅各書", "聖經 雅各書 1:1"),
 										linebot.NewPostbackTemplateAction("彼得前書", "彼得前書", "聖經 彼得前書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "其他書信",
+										imageURL, "a12", "其他書信",
 										linebot.NewPostbackTemplateAction("彼得後書", "彼得後書", "聖經 彼得後書 1:1"),
 										linebot.NewPostbackTemplateAction("約翰一書", "約翰一書", "聖經 約翰一書 1:1"),
 										linebot.NewPostbackTemplateAction("約翰二書", "約翰二書", "聖經 約翰二書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "新約", "其他書信",
+										imageURL, "a13", "其他書信",
 										linebot.NewPostbackTemplateAction("約翰三書", "約翰三書", "聖經 約翰三書 1:1"),
 										linebot.NewPostbackTemplateAction("猶大書", "猶大書", "聖經 猶大書 1:1"),
 										linebot.NewPostbackTemplateAction("啟示錄", "啟示錄", "聖經 啟示錄 1:1"),
@@ -2344,7 +2344,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										log.Print(err)
 								}
 							return
-						case "舊約列表":
+						case "a14":
 								// old_list := "【摩西五經】\n" +
 								// 			"\n" +
 								// 			"創世紀\n" +
@@ -2402,19 +2402,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								imageURL = Bible_imageURL
 								LineTemplate_old1 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "摩西五經",
+										imageURL, "a15", "摩西五經",
 										linebot.NewPostbackTemplateAction("創世紀", "創世紀", "聖經 創世紀 1:1"),
 										linebot.NewPostbackTemplateAction("出埃及記", "出埃及記", "聖經 出埃及記 1:1"),
 										linebot.NewPostbackTemplateAction("利未記", "利未記", "聖經 利未記 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "摩西五經(2) + 舊約歷史書(1)",
+										imageURL, "a16", "摩西五經(2) + 舊約歷史書(1)",
 										linebot.NewPostbackTemplateAction("民數記", "民數記", "聖經 民數記 1:1"),
 										linebot.NewPostbackTemplateAction("申命記", "申命記", "聖經 申命記 1:1"),
 										linebot.NewPostbackTemplateAction("約書亞記", "約書亞記", "聖經 約書亞記 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "舊約歷史書",
+										imageURL, "a17", "舊約歷史書",
 										linebot.NewPostbackTemplateAction("士師記", "士師記", "聖經 士師記 1:1"),
 										linebot.NewPostbackTemplateAction("路得記", "路得記", "聖經 路得記 1:1"),
 										linebot.NewPostbackTemplateAction("撒母耳記上", "撒母耳記上", "聖經 撒母耳記上 1:1"),
@@ -2448,19 +2448,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 								LineTemplate_old2 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "舊約歷史書",
+										imageURL, "a18", "舊約歷史書",
 										linebot.NewPostbackTemplateAction("撒母耳記下", "撒母耳記下", "聖經 撒母耳記下 1:1"),
 										linebot.NewPostbackTemplateAction("列王紀上", "列王紀上", "聖經 列王紀上 1:1"),
 										linebot.NewPostbackTemplateAction("列王紀下", "列王紀下", "聖經 列王紀下 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "舊約歷史書",
+										imageURL, "a19", "舊約歷史書",
 										linebot.NewPostbackTemplateAction("歷代志上", "歷代志上", "聖經 歷代志上 1:1"),
 										linebot.NewPostbackTemplateAction("歷代志下", "歷代志下", "聖經 歷代志下 1:1"),
 										linebot.NewPostbackTemplateAction("以斯拉記", "以斯拉記", "聖經 以斯拉記 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "舊約歷史書(2) + 詩歌智慧書(1)",
+										imageURL, "a9", "舊約歷史書(2) + 詩歌智慧書(1)",
 										linebot.NewPostbackTemplateAction("尼希米記", "尼希米記", "聖經 尼希米記 1:1"),
 										linebot.NewPostbackTemplateAction("以斯帖記", "以斯帖記", "聖經 以斯帖記 1:1"),
 										linebot.NewPostbackTemplateAction("約伯記", "約伯記", "聖經 約伯記 1:1"),
@@ -2477,19 +2477,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 								LineTemplate_old3 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "詩歌智慧書",
+										imageURL, "a8", "詩歌智慧書",
 										linebot.NewPostbackTemplateAction("詩篇", "詩篇", "聖經 詩篇 1:1"),
 										linebot.NewPostbackTemplateAction("箴言", "箴言", "聖經 箴言 1:1"),
 										linebot.NewPostbackTemplateAction("傳道書", "傳道書", "聖經 傳道書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "詩歌智慧書(1) + 大先知書(2)",
+										imageURL, "a7", "詩歌智慧書(1) + 大先知書(2)",
 										linebot.NewPostbackTemplateAction("雅歌", "雅歌", "聖經 雅歌 1:1"),
 										linebot.NewPostbackTemplateAction("以賽亞書", "以賽亞書", "聖經 以賽亞書 1:1"),
 										linebot.NewPostbackTemplateAction("耶利米書", "耶利米書", "聖經 耶利米書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "大先知書",
+										imageURL, "a6", "大先知書",
 										linebot.NewPostbackTemplateAction("耶利米哀歌", "耶利米哀歌", "聖經 耶利米哀歌 1:1"),
 										linebot.NewPostbackTemplateAction("以西結書", "以西結書", "聖經 以西結書 1:1"),
 										linebot.NewPostbackTemplateAction("但以理書", "但以理書", "聖經 但以理書 1:1"),
@@ -2506,25 +2506,25 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 								LineTemplate_old4 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "小先知書",
+										imageURL, "a5", "小先知書",
 										linebot.NewPostbackTemplateAction("何西阿書", "何西阿書", "聖經 何西阿書 1:1"),
 										linebot.NewPostbackTemplateAction("約珥書", "約珥書", "聖經 約珥書 1:1"),
 										linebot.NewPostbackTemplateAction("阿摩司書", "阿摩司書", "聖經 阿摩司書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "小先知書",
+										imageURL, "a4", "小先知書",
 										linebot.NewPostbackTemplateAction("俄巴底亞書", "俄巴底亞書", "聖經 俄巴底亞書 1:1"),
 										linebot.NewPostbackTemplateAction("約拿書", "約拿書", "聖經 約拿書 1:1"),
 										linebot.NewPostbackTemplateAction("彌迦書", "彌迦書", "聖經 彌迦書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "小先知書",
+										imageURL, "a3", "小先知書",
 										linebot.NewPostbackTemplateAction("那鴻書", "那鴻書", "聖經 那鴻書 1:1"),
 										linebot.NewPostbackTemplateAction("哈巴谷書", "哈巴谷書", "聖經 哈巴谷書 1:1"),
 										linebot.NewPostbackTemplateAction("西番雅書", "西番雅書", "聖經 西番雅書 1:1"),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "舊約", "小先知書",
+										imageURL, "a2", "小先知書",
 										linebot.NewPostbackTemplateAction("哈該書", "哈該書", "聖經 哈該書 1:1"),
 										linebot.NewPostbackTemplateAction("撒迦利亞書", "撒迦利亞書", "聖經 撒迦利亞書 1:1"),
 										linebot.NewPostbackTemplateAction("瑪拉基書", "瑪拉基書", "聖經 瑪拉基書 1:1"),
@@ -2573,7 +2573,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							log.Print(`觀察 message.Text + "？\n抱歉目前找不到" = `)
 							log.Print(bot_msg==message.Text + "？\n抱歉目前找不到")
 
-							if (reg_nofind.ReplaceAllString(bot_msg, "$1")!="我還沒學呢..."){
+							if (reg_nofind.ReplaceAllString(bot_msg, "a1")!="我還沒學呢..."){
 								//查詢成功
 
 								if bible_short_name=="" {
@@ -2582,19 +2582,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									imageURL = Bible_imageURL
 									LineTemplate_bible_info := linebot.NewCarouselTemplate(
 										linebot.NewCarouselColumn(
-											imageURL, "聖經查詢方法", "以下是示範。\n也可以手動輸入試試看各種組合。",
+											imageURL, "e9", "以下是示範。\n也可以手動輸入試試看各種組合。",
 											linebot.NewPostbackTemplateAction("聖經 創世紀 5：5","聖經 創世紀 5：5","聖經 創世紀 5：5"),
 											linebot.NewPostbackTemplateAction("英文聖經 出埃及 1：4-5","英文聖經 出埃及 1：4-5","英文聖經 出埃及 1：4-5"),
 											linebot.NewPostbackTemplateAction("多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5","多國語言聖經 創世紀 5：5"),
 										),
 										linebot.NewCarouselColumn(
-											imageURL, "更多示範", "以下是示範。\n也可以手動輸入試試看各種組合。",
+											imageURL, "e8", "以下是示範。\n也可以手動輸入試試看各種組合。",
 											linebot.NewPostbackTemplateAction("日文聖經 啟示錄 6：5-6","日文聖經 啟示錄 6：5-6","日文聖經 啟示錄 6：5-6"),
 											linebot.NewPostbackTemplateAction("韓文聖經 創 ５：５－７","韓文聖經：創世紀：５：５－７","韓文聖經：創世紀：５：５－７"),
 											linebot.NewPostbackTemplateAction("越南聖經；創世紀；5；5-9","越南聖經；創世紀；5；5-9","越南聖經；創世紀；5；5-9"),
 										),
 										linebot.NewCarouselColumn(
-											imageURL, "更多速查示範", "以下是示範。\n也可以手動輸入試試看各種組合。",
+											imageURL, "e7", "以下是示範。\n也可以手動輸入試試看各種組合。",
 											linebot.NewPostbackTemplateAction("俄文聖經 創 5 1-10","俄文聖經 創 5 1-10","俄文聖經 創 5 1-10"),
 											linebot.NewPostbackTemplateAction("台語聖經 Gen 5：5-7","台語聖經 Gen 5：5-7","台語聖經 Gen 5：5-7"),
 											linebot.NewPostbackTemplateAction("All bible Gen 5:5","All bible Gen 5:5","All bible Gen 5:5"),
@@ -2723,7 +2723,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									bible_sec = "1"
 								}
 
-								if bot_msg == "查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
+								if bot_msg == "e6，有可能指定查詢的節超過範圍。"{
 									bible_chap = "1"
 									bible_sec = "1"
 								}
@@ -2760,7 +2760,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 								imageURL = Bible_imageURL
 								LineTemplate_find := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "查看整篇前後文", "找到 " + message.Text + "！\n可按按鈕去看前後文。\n輸入「聖經」可以知道查詢方法。",
+										imageURL, "e5", "找到 " + message.Text + "！\nYou can press the button to see前後文。\n輸入「聖經」可以知道查詢方法。",
 										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
 										linebot.NewURITemplateAction("中文和合本","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv"),
 										linebot.NewURITemplateAction("英文（KJV）","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=kjv"),
@@ -2802,7 +2802,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										//"輸入「聖經」會出現如何查詢聖經。\n輸入「舊約列表」出現舊約\n輸入「舊約列表」出現新約"
 								LineTemplate_find2 := linebot.NewCarouselTemplate(
 									linebot.NewCarouselColumn(
-										imageURL, "查詢其他語言", "找到 " + message.Text + "！\n查詢其他語言",
+										imageURL, "查詢其他語言", "e4" + message.Text + "！\n查詢其他語言",
 										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
 										linebot.NewPostbackTemplateAction("英文（KJV）", "英文（KJV）", "英文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 										linebot.NewPostbackTemplateAction("日文聖經", "日文聖經", "日文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
@@ -2811,15 +2811,15 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										// linebot.NewURITemplateAction("英文（KJV）","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=kjv"),
 										// linebot.NewURITemplateAction("日文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=jp"),
 									),
-									linebot.NewCarouselColumn(
-										imageURL, "查詢其他語言", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
-										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
+									linebot.NewCarouse.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
 										linebot.NewPostbackTemplateAction("韓文聖經", "韓文聖經", "韓文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 										linebot.NewPostbackTemplateAction("越南聖經", "越南聖經", "越南聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-										linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
+										linebotlColumn(
+										imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
+										//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 									),
 									linebot.NewCarouselColumn(
-										imageURL, "其他語言查看整篇", "可按按鈕去看。",
+										imageURL, "e1", "You can press the button to see。",
 										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
 										linebot.NewURITemplateAction("台語","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby"),
 										linebot.NewURITemplateAction("中英對照","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv"),
@@ -2829,7 +2829,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									// LineTemplate_other,
 									LineTemplate_CarouselColumn_feedback,
 								)
-								wordmode_str2 := //"台語\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=gebklhlruby\n\n" +
+								wordmode_str2 := //"e2\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=gebklhlruby\n\n" +
 										"中文/台語對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby\n\n" +
 										"中英對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv\n\n"+
 										"中日對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=jp"
@@ -2964,7 +2964,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//因為 bot_msg==GOTEST 的時候，不可能會找到 anime_url。所以不用在 else 裡面。
 					// if anime_url!=""{
 					// 	//找到的時候的 UI
-					//     imageURL = "https://i2.bahamut.com.tw/anime/FB_anime.png"
+					//     imageURL = "https://lh3.googleusercontent.com/-VenMkqATvuc/XvGEKik-g5I/AAAAAAAAFrc/gTeLI1RZfx4y0se7UeY3k2bfrKi8AufHwCK8BGAsYHg/s512/2020-06-22.jpg"
 					// 	template := linebot.NewCarouselTemplate(
 					// 		linebot.NewCarouselColumn(
 					// 			imageURL, "動畫搜尋結果", "在找" + message.Text + "對吧！？\n建議可以直接在巴哈姆特動畫瘋 APP 裡面播放！",							
@@ -2998,7 +2998,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					// 	//2016.12.22+ 利用正則分析字串結果，來設置觸發找不到的時候要 + 的 UI
 					// 	if reg_nofind.ReplaceAllString(bot_msg,"$1") == "才會增加比較慢XD）"{
 					// 		//找不到的時候
-					// 		imageURL = "https://i2.bahamut.com.tw/anime/FB_anime.png"
+					// 		imageURL = "https://lh3.googleusercontent.com/-VenMkqATvuc/XvGEKik-g5I/AAAAAAAAFrc/gTeLI1RZfx4y0se7UeY3k2bfrKi8AufHwCK8BGAsYHg/s512/2020-06-22.jpg"
 					// 		template := linebot.NewCarouselTemplate(
 					// 			linebot.NewCarouselColumn(
 					// 				imageURL, "找不到 "  +  message.Text   +   " 耶", "有可能打錯字或這真的沒有收錄，\n才會找不到。",							
@@ -3041,10 +3041,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					 		// log.Print("source.UserID = " + source.UserID)
 					 		// log.Print("target_id_code = " + target_id_code)
 									//2016.12.20+//push_string := ""
-					// 				if source.UserID == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+					// 				if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 					// 					push_string = "你好，主人。（PUSH_MESSAGE 才可以發）"
 					// 				}
-					// 				if source.UserID == "Uf150a9f2763f5c6e18ce4d706681af7f"{
+					// 				if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 					// 					push_string = "唉呦，你是包包吼"
 					// 				}
 					//2016.12.20+ close push
@@ -3088,10 +3088,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				//----------------------------------------------------------------取得使用者資訊的寫法
 
 				// username := ""
-				// if markID == "U6f738a70b63c5900aa2c0cbbe0af91c4"{//if source.UserID == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+				// if markID == "ub5e4ae027d8d4a82736222b2a8dc77df"{//if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 				// 	username = "LL = " + userID + groupID + RoomID //2016.12.20+
 				// }
-				// if markID == "Uf150a9f2763f5c6e18ce4d706681af7f"{
+				// if markID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 				// 	username = "包包"
 				// }
 
