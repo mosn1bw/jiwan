@@ -2781,27 +2781,16 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 										// "客家話\nhttp://bible.fhl.net/new/listenhb.php?version=2&bid=" + bible_id + "&chap=" + bible_chap + "&auto=1\n\n" +
 										//"輸入「聖經」會出現如何查詢聖經。\n輸入「舊約列表」出現舊約\n輸入「舊約列表」出現新約"
 								LineTemplate_find2 := linebot.NewCarouselTemplate(
-									linebot.NewCarouselColumn(
+									linebot.NewCarouselColumn
 										imageURL, "查詢其他語言", "e4" + message.Text + "！\n查詢其他語言",
 										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
 										linebot.NewPostbackTemplateAction("英文（KJV）", "英文（KJV）", "英文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 										linebot.NewPostbackTemplateAction("日文聖經", "日文聖經", "日文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 										linebot.NewPostbackTemplateAction("多國語言並列", "多國語言並列", "多國語聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-										// linebot.NewURITemplateAction("和合本","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv"),
-										// linebot.NewURITemplateAction("英文（KJV）","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=kjv"),
-										// linebot.NewURITemplateAction("日文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=jp"),
 									),
-									//linebot.NewCarouse.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
-									//	linebot.NewPostbackTemplateAction("韓文聖經", "韓文聖經", "韓文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-									//	linebot.NewPostbackTemplateAction("越南聖經", "越南聖經", "越南聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-									//	linebotlColumn(
-									//	imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
-									//	//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-						
-											
-								}else{
+									
 									log.Print("bot_msg = " + bot_msg)
-									send_color := "yellow"
+							        	send_color := "yellow"{
 									send_title := "查詢成功"
 									if bot_msg=="查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
 										send_color = "orange"
@@ -2814,7 +2803,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus + `查詢結果：\n` + bot_msg, "yellow" , "查詢成功",target_id_code)
 								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus + `查詢結果：\n` + bot_msg , "LINE 同步：查詢成功" ,target_id_code)
 								HttpPost_Zapier(target_item + "[" + user_talk + "](" + userImageUrl + ")" + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
-							}else{
+
 								//沒找到 reg_nofind.ReplaceAllString(bot_msg, "$1")=="我還沒學呢..."
 								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										log.Print(7650)
@@ -2824,24 +2813,14 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：查詢失敗",target_id_code)
 								HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：查詢失敗",target_id_code,user_talk)
 
-								//HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗",target_id_code)
-								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" ,target_id_code)
-								//HttpPost_Zapier("[" + user_talk + "](" + userImageUrl + ") 觸發了按鈕並呼了 event.Postback.Data = " + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
-							}
-					}
-					//2016.12.22+ 利用正則分析字串結果，來設置觸發找開發者的時候要 + 的 UI  //不能用 bot_msg == 開發者，因為 bot_msg 早就被改寫成一串廢話。
-					// if reg_loking_for_admin.ReplaceAllString(bot_msg,"$1") == "你找我的製造者？OK！"{
-
-					// }
-
-
+								
 				//特別處理過貼圖範圍外的貼圖
-				if (PackageID_int!=0) && (PackageID_int<=4){
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message_moto,obj_message).Do(); err != nil {
+				if (PackageID_int!=0){ && (PackageID_int<=4){{
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message_moto,obj_message).Do(); err != nil {{
 						log.Print(7806)
 						log.Print(err)
 					}
-				}else{
+				}else{{
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message).Do(); err != nil {
 						log.Print(7811)
 						log.Print(err)
