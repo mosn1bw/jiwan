@@ -2999,7 +2999,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
-			case *linebot.TextMessage:
+				case *linebot.TextMessage:{
 				quota, err := bot.GetMessageQuota().Do()
 				if err != nil {
 					log.Println("Quota err:", err)
