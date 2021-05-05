@@ -661,8 +661,8 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				//print_string = "聖經"
 				//print_string = "你是要找 " +  reg.ReplaceAllString(text, "$3") + " 對嗎？\n對不起，我還沒學呢...\n"
 		}
-	case "聖經","bible","Bible","ｂｉｂｌｅ","Ｂｉｂｌｅ":
-		print_string = text + "？\n抱歉目前找不到"
+	//case "聖經","bible","Bible","ｂｉｂｌｅ","Ｂｉｂｌｅ":
+		//print_string = text + "？\n抱歉目前找不到"
 		//bible_say := "有喔！有喔！你在找這個對吧！？\n"
 		//view-source:http://bible.fhl.net/json/listall.html
 		//----JavaScript 偷吃步法（拿 JavaScript 當預處理XD）
@@ -2829,10 +2829,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									// LineTemplate_other,
 									LineTemplate_CarouselColumn_feedback,
 								)
-								wordmode_str2 := //"e2\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=gebklhlruby\n\n" +
-										"中文/台語對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby\n\n" +
-										"中英對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv\n\n"+
-										"中日對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=jp"
+								//wordmode_str2 := //"e2\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=gebklhlruby\n\n" +
+										//"中文/台語對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby\n\n" +
+										//"中英對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv\n\n"+
+										//"中日對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=jp"
 										// "中韓對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=korean\n\n" +
 										// "中越對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=vietnamese\n\n" +
 										// "中俄對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=russian"
