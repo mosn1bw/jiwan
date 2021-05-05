@@ -2815,11 +2815,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 										//"中日對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=jp"
 										// "中韓對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=korean\n\n" +
 										// "中越對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=vietnamese\n\n" +
-										// "中俄對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=russian"
-								//temp_msg := bot_msg
-								//obj_message := linebot.NewTemplateMessage(wordmode_str2, LineTemplate_find)
-								//obj_message2 := linebot.NewTemplateMessage("你可以開最新版本的 LINE APP 有方便的按鈕可以使用。\n單獨輸入「聖經」可以知道查詢方法。\n\n" + wordmode_str, LineTemplate_find2)
-								//if _, err = bot.ReplyMessage(event.ReplyToken, obj_message2,obj_message,linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										//log.Print(7557)
 										//log.Print(err)
 										//log.Print("linebot: APIError 400 The request body has 1 error(s)\n[messages[2].text] Length must be between 0 and 2000"==err.Error()) //bot_msg 位子換了所以變成 [2]
@@ -2844,63 +2839,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 													//部分文字列を取り出す	http://ashitani.jp/golangtips/tips_string.html#string_Replace
 												//string([]rune(test_string)[0:len([]rune(test_string))])	https://play.golang.org/p/ivzNYS711B //UTF-8 的顯示部分字串的方法 結合 len([]rune(test_string)) 就得到 UTF-8 版本的字數
 												//http://stackoverflow.com/questions/15018545/how-to-index-characters-in-a-golang-string
-												if _, err = bot.ReplyMessage(event.ReplyToken,
-													obj_message2,
-													obj_message,
-													linebot.NewTextMessage(string([]rune(bot_msg)[0:2000])),
-													linebot.NewTextMessage(string([]rune(bot_msg)[1990:len([]rune(bot_msg))])),
-												).Do(); err != nil {
-													//第一次挽救：分割成兩個還是失敗，一定是後面那個太胖。
-													log.Print(7587)
-													log.Print(err.Error())
-													if _, err = bot.ReplyMessage(event.ReplyToken,
-														obj_message2,
-														obj_message,
-														linebot.NewTextMessage(string([]rune(bot_msg)[0:2000])),
-														linebot.NewTextMessage(string([]rune(bot_msg)[1990:3990])),
-														linebot.NewTextMessage(string([]rune(bot_msg)[3980:len([]rune(bot_msg))])),
-													).Do(); err != nil {
-													//if _, err = bot.ReplyMessage(event.ReplyToken,obj_message2,obj_message,linebot.NewTextMessage(bot_msg[0:3000])).Do(); err != nil {
-													//if _, err = bot.ReplyMessage(event.ReplyToken,linebot.NewTextMessage(len(bot_msg)).Do(); err != nil {
-														//HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗" + `\n` + err.Error(),target_id_code)
-														//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" + `\n<br>` +  err.Error(),target_id_code)
-														log.Print(7600)
-														log.Print(err.Error())
-														//連續三次發現失敗(原始內容、分成2、分成3)，勸退XD
-														if _, err = bot.ReplyMessage(event.ReplyToken,
-															linebot.NewTextMessage(string([]rune(bot_msg)[0:2000])),
-															linebot.NewTextMessage(string([]rune(bot_msg)[1990:3990])),
-															linebot.NewTextMessage(string([]rune(bot_msg)[3980:5980])),
-															linebot.NewStickerMessage("2", "152"),
-															linebot.NewTextMessage("【查詢 "  + message.Text +  " 發生錯誤】\n\n查詢得到的回應超過 6000 字，\n超過 LINE 可以傳輸的上限。\n因此內容最後有遺漏。\n\n請減少查詢節的數量，重新再查一次。"),
-														).Do(); err != nil {
-															log.Print(7604)
-															log.Print(err.Error())
-														}
-													}else{
-														// 第二次分割成三個才成功
-														send_color := "yellow"
-														send_title := "查詢成功"
-														if bot_msg=="查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
-															send_color = "orange"
-															send_title = "查詢失敗，範圍超過。"
-														}
-														HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, send_color , "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code)
-														HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：" + send_title + `\n` + strings.Replace(bot_msg,"\n", `\n<br/>`, -1),target_id_code)
-														HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code,user_talk)
-													}
-												}else{
-													// 第一次分割成兩個就成功了
-													send_color := "yellow"
-													send_title := "查詢成功"
-													if bot_msg=="查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
-														send_color = "orange"
-														send_title = "查詢失敗，範圍超過。"
-													}
-													HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, send_color , "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code)
-													HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：" + send_title + `\n` + strings.Replace(bot_msg,"\n", `\n<br/>`, -1),target_id_code)
-													HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code,user_talk)
-												}
+												
 								//沒找到 reg_nofind.ReplaceAllString(bot_msg, "$1")=="我還沒學呢..."
 								//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										//log.Print(7650)
