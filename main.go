@@ -2996,18 +2996,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 	}
 }
 
-func callbackHandler(w http.ResponseWriter, r *http.Request) {
-	events, err := bot.ParseRequest(r)
-
-	if err != nil {
-		if err == linebot.ErrInvalidSignature {
-			w.WriteHeader(400)
-		} else {
-			w.WriteHeader(500)
-		}
-		return
-	}
-
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
@@ -3023,3 +3011,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
