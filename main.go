@@ -2928,78 +2928,9 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 					 		// }
 					// 	}
 					// }
-				}
+				//}
 					// 				m := linebot.NewTextMessage("ok")
-					// 				    if _, err = bot.ReplyMessage(event.ReplyToken, m).Do(); err != nil {
-
-					// 				    }
-									
-									//----------PushMessage-----------這段可以跟 ReplyMessage 同時有效，但是只會在 1 對 1 有效。群組無效。---------
-									//------開發者測試方案有效(好友最多50人/訊息無上限)，免費版(好友不限人數/訊息限制1000)、入門版無效，旗艦版、專業版有效。
-									
-									//http://muzigram.muzigen.net/2016/09/linebot-golang-linebot-heroku.html
-									//https://github.com/mogeta/lbot/blob/master/main.go
-					 		// source := event.Source
-					 		// log.Print("source.UserID = " + source.UserID)
-					 		// log.Print("target_id_code = " + target_id_code)
-									//2016.12.20+//push_string := ""
-					// 				if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
-					// 					push_string = "你好，主人。（PUSH_MESSAGE 才可以發）"
-					// 				}
-					// 				if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
-					// 					push_string = "唉呦，你是包包吼"
-					// 				}
-					//2016.12.20+ close push
-					// 					if source.Type == linebot.EventSourceTypeUser {
-					// 						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(push_string)).Do(); err != nil {
-					// 							log.Print(err)
-					// 						}
-					// 					}
-					// 					if source.Type == linebot.EventSourceTypeUser {
-					// 						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(push_string)).Do(); err != nil {
-					// 							log.Print(err)
-					// 						}
-					// 					}
-						//上面重覆兩段 push 用來證明 push 才可以連發訊息框，re 只能一個框
-					//---------------------這段可以跟 ReplyMessage 同時有效，但是只會在 1 對 1 有效。群組無效。---------
-			//case *linebot.ImageMessage:
-				// 				_, err := bot.SendText([]string{event.RawContent.Params[0]}, "Hi~\n歡迎加入 Delicious!\n\n想查詢附近或各地美食都可以LINE我呦！\n\n請問你想吃什麼?\nex:義大利麵\n\n想不到吃什麼，也可以直接'傳送目前位置訊息'")
-				// 				var img = "http://imageshack.com/a/img921/318/DC21al.png"
-				// 				_, err = bot.SendImage([]string{content.From}, img, img)
-				// 				if err != nil {
-				// 					log.Println(err)
-				// 				}
-									
-				// 				if err := bot.handleImage(message, event.ReplyToken); err != nil {
-				// 					log.Print(err)
-				// 				}
-									//https://devdocs.line.me/en/#webhook-event-object
-				//log.Print("對方丟圖片 message.ID = " + message.ID)
-
-				//log.Print("對方丟圖片 linebot.EventSource = " + linebot.EventSource
-
-				//----------------------------------------------------------------取得使用者資訊的寫法
-				// source := event.Source
-
-				// userID := event.Source.UserID
-				// groupID := event.Source.GroupID
-				// RoomID := event.Source.RoomID
-				// markID := userID + groupID + RoomID
-				
-				// log.Print(source.UserID)
-				//----------------------------------------------------------------取得使用者資訊的寫法
-
-				// username := ""
-				// if markID == "ub5e4ae027d8d4a82736222b2a8dc77df"{//if source.UserID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
-				// 	username = "LL = " + userID + groupID + RoomID //2016.12.20+
-				// }
-				// if markID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
-				// 	username = "包包"
-				// }
-				//https://github.com/line/line-bot-sdk-go/blob/master/linebot/get_content_test.go
-				//ContentLength
-				//https://golang.org/pkg/image/jpeg/
-
+					// 	
 				//目標是把 content.Content 存起來
 
                 image, err := jpeg.Decode(content.Content)
@@ -3021,47 +2952,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 
 				log.Print(imgByte)
 
-                //暫時放棄 = =
-
-									// file, err := ioutil.TempFile("temp.jpg", "")
-									// if err != nil {
-									// 	log.Print(2175)
-									// 	log.Print(err)
-									// }
-									// defer file.Close()
-									
-									// _, err = ioutil.WriteFile("temp.jpg", []byte(image.Bounds()), 0600)//io.Copy(file, content.Content)
-									// if err != nil {
-									// 	log.Print(2182)
-									// 	log.Print(err)
-									// }
-									// log.Printf("Saved %s", file.Name())
-
-
-                //可以
-				// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這圖片是？\n\n" + username + "你丟給我圖片幹嘛！\n我眼睛還沒長好看不懂XD")).Do(); err != nil {
-				// 	log.Print(1845)
-				// 	log.Print(err)
-				// }
-			case *linebot.VideoMessage:
-				//https://github.com/dongri/line-bot-sdk-go
-			    originalContentURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/video-original.mp4"
-			    previewImageURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/video-preview.png"
-			    obj_message := linebot.NewVideoMessage(originalContentURL, previewImageURL)
- 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這影片是？\n我也給你影片吧！\n\n這只是測試功能"),obj_message).Do(); err != nil {
- 					log.Print(1854)
- 					log.Print(err)
- 				}
-			//case *linebot.AudioMessage:
-				//下面都是 OK 的寫法，但是還是沒辦法取得...........
-				//另外因為現在這個專案不適合這樣玩
-				// originalContentURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/ok.m4a"
-				// duration := 1000
-				// obj_message := linebot.NewAudioMessage(originalContentURL, duration)
- 				//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這是什麼聲音？"),obj_message).Do(); err != nil {
- 				//	log.Print(1862)
- 				//	log.Print(err)
- 				//}
 			case *linebot.LocationMessage:
 				log.Print("message.Title = " + message.Title)
 				log.Print("message.Address = " + message.Address)
