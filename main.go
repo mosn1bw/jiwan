@@ -2798,6 +2798,42 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 									//	imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
 									//	//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 						
+											
+								}else{
+									log.Print("bot_msg = " + bot_msg)
+									send_color := "yellow"
+									send_title := "查詢成功"
+									if bot_msg=="查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
+										send_color = "orange"
+										send_title = "查詢失敗，範圍超過。"
+									}
+									HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, send_color , "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code)
+									HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：" + send_title + `\n` + strings.Replace(bot_msg,"\n", `\n<br/>`, -1),target_id_code)
+									HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code,user_talk)
+								}
+								HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus + `查詢結果：\n` + bot_msg, "yellow" , "查詢成功",target_id_code)
+								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus + `查詢結果：\n` + bot_msg , "LINE 同步：查詢成功" ,target_id_code)
+								HttpPost_Zapier(target_item + "[" + user_talk + "](" + userImageUrl + ")" + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
+							}else{
+								//沒找到 reg_nofind.ReplaceAllString(bot_msg, "$1")=="我還沒學呢..."
+								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
+										log.Print(7650)
+										log.Print(err)
+								}
+								HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "orange" , "LINE 同步：查詢失敗",target_id_code)
+								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：查詢失敗",target_id_code)
+								HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：查詢失敗",target_id_code,user_talk)
+
+								//HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗",target_id_code)
+								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" ,target_id_code)
+								//HttpPost_Zapier("[" + user_talk + "](" + userImageUrl + ") 觸發了按鈕並呼了 event.Postback.Data = " + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
+							}
+					}
+					//2016.12.22+ 利用正則分析字串結果，來設置觸發找開發者的時候要 + 的 UI  //不能用 bot_msg == 開發者，因為 bot_msg 早就被改寫成一串廢話。
+					// if reg_loking_for_admin.ReplaceAllString(bot_msg,"$1") == "你找我的製造者？OK！"{
+
+					// }
+
 
 				//特別處理過貼圖範圍外的貼圖
 				if (PackageID_int!=0) && (PackageID_int<=4){
