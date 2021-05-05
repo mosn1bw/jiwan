@@ -2799,33 +2799,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 									//	//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 						
 
-			case *linebot.StickerMessage:
-				log.Print("message.PackageID = " + message.PackageID)
-				log.Print("message.StickerID = " + message.StickerID)
-					//https://github.com/line/line-bot-sdk-go/blob/master/examples/kitchensink/server.go handleSticker
-					//message.PackageID, message.StickerID
-				//丟跟對方一樣的貼圖回他
-				obj_message_moto := linebot.NewStickerMessage(message.PackageID, message.StickerID)
-					//https://github.com/line/line-bot-sdk-go/blob/master/examples/kitchensink/server.go
-					//2016.12.20+ 多次框框的方式成功！（最多可以五個）
-					//.NewStickerMessage 發貼貼圖成功	 //https://devdocs.line.me/files/sticker_list.pdf			
-				obj_message := linebot.NewStickerMessage("2", "514") //https://devdocs.line.me/en/?go#send-message-object
- 				//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("OU<"),linebot.NewTextMessage("0.0"),linebot.NewTextMessage("．ω．"),linebot.NewTextMessage("．ω．")).Do(); err != nil {
-
-				PackageID_int := 0
-				StickerID_int := 0
-				if PackageID_int, err = strconv.Atoi(message.PackageID); err != nil {
-					log.Print("7793 字串轉整數失敗")
-					log.Print(PackageID_int)
-					log.Print(err.Error())
-				}
-
-				if StickerID_int, err = strconv.Atoi(message.StickerID); err != nil {
-					log.Print("7798 字串轉整數失敗")
-					log.Print(StickerID_int)
-					log.Print(err.Error())
-				}
-
 				//特別處理過貼圖範圍外的貼圖
 				if (PackageID_int!=0) && (PackageID_int<=4){
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message_moto,obj_message).Do(); err != nil {
