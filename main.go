@@ -2996,6 +2996,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 	}
 }
 
-func Contains(s, substr string) bool {
+func Contains(s, substr string) bool { 
      return Index(s, substr) != -1
 }
