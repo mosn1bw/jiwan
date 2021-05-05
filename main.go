@@ -828,10 +828,10 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 						// if bible_text_string != ""{
 						// 	print_string = "[創世紀 " + chap_string + " : " +  sec_string + "]\n" + bible_text_string
 						// }
-						switch sec_string {
-							case "":	//不知節的時候，知章
+						//switch sec_string {
+							//case "":	//不知節的時候，知章
 								//print_string = Bible_print_string("創","創世紀", chap_string, "1","nstrunv")
-							default:
+							//default:
 								//print_string = reg.ReplaceAllString(text, "$3") + " " + reg.ReplaceAllString(text, "$4") + " : " + reg.ReplaceAllString(text, "$6")
 								//print_string = Bible_print_string("創","創世紀", chap_string, sec_string,"nstrunv")
 						}
@@ -846,33 +846,13 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				// if bible_text_string != ""{
 				// 	print_string = "[創世紀 " + chap_string + " : " +  sec_string + "]\n" + bible_text_string
 				// }
-			case "d24","bible","Bible":
-				print_string = "聖經"
-			default:
-				//print_string = "你是要找 " +  reg.ReplaceAllString(text, "$3") + " 對嗎？\n對不起，我還沒學呢...\n"
-				print_string = "聖經"
-		}
-	default:
-		if reply_mode!="" {
-			print_string = "HI～\n如有其他建議或想討論，請對我輸入「開發者」進行聯絡。"
-		} else {
-            print_string = "" //安靜模式
-		}
-	}
-	log.Print("Return 前的 print_string = " + print_string)
-	return print_string, chap_string, sec_string, bible_short_name
-}
-
-//http://qiita.com/koki_cheese/items/66980888d7e8755d01ec
-// func handleTask(w http.ResponseWriter, r *http.Request) {
-// }
 
 	//修改時主要參考官方文件以及：
 	// https://github.com/line/line-bot-sdk-go/blob/master/examples/kitchensink/server.go
 		// KEY = handleText 等
 	// https://github.com/dongri/line-bot-sdk-go
 		// KEY = linebot.NewAudioMessage(originalContentURL, duration)
-func callbackHandler(w http.ResponseWriter, r *http.Request) {
+//func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		// allow cross domain AJAX requests
 		// http://stackoverflow.com/questions/12830095/setting-http-headers-in-golang/
 		//	https://developer.mozilla.org/ja/docs/Web/HTTP/HTTP_access_control
@@ -2852,11 +2832,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										// 		log.Print(err.Error())
 										// 	}
 										// }
-										switch err.Error(){
-											case "linebot: APIError 400 The request body has 1 error(s)\n[messages[0].text] Length must be between 0 and 2000","linebot: APIError 400 The request body has 1 error(s)\n[messages[1].text] Length must be between 0 and 2000","linebot: APIError 400 The request body has 1 error(s)\n[messages[2].text] Length must be between 0 and 2000":
-												log.Print("！！！！！有走進來 case error msg2 must be between 0 and 2000，總數 = ")
+										//switch err.Error(){
+											//case "linebot: APIError 400 The request body has 1 error(s)\n[messages[0].text] Length must be between 0 and 2000","linebot: APIError 400 The request body has 1 error(s)\n[messages[1].text] Length must be between 0 and 2000","linebot: APIError 400 The request body has 1 error(s)\n[messages[2].text] Length must be between 0 and 2000":
+												//log.Print("！！！！！有走進來 case error msg2 must be between 0 and 2000，總數 = ")
 												//log.Print(len(bot_msg)) //7121 bytes
-												log.Print(len([]rune(bot_msg))) //https://play.golang.org/p/yikJz-BKOW //utf8.RuneLen
+												//log.Print(len([]rune(bot_msg))) //https://play.golang.org/p/yikJz-BKOW //utf8.RuneLen
 
 												//log.Print("測試 = ")
 												//log.Print(len(bot_msg[0:3000]))
