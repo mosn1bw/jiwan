@@ -22,7 +22,7 @@ import (
     "crypto/md5"
     "encoding/hex"
 
-    "encoding/json"
+   // "encoding/json"
     // "github.com/bitly/go-simplejson"
 
 )
@@ -641,24 +641,24 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 		print_string = "簡介"
 	case "開發者","admin","Admin","ａｄｍｉｎ","意見回饋":
 		print_string = "開發者"
-	case "w5":
-		log.Print(reg.ReplaceAllString(text, "$3"))
-		switch reg.ReplaceAllString(text, "$3") {
-			case "Rev","Revelation","啟","啟示","啟示錄","Re","re","ｒｅ","Ｒｅ","rev","Откровение ап. Иоанна Богослова (Апокалипсис)","Khải-huyền","ヨハネの黙示録","黙示録","요한계시록":
-				bible_short_name = "啟"
-				switch chap_string {
-					case "":
-						print_string = "啟示錄"  //不知章節的時候 //用來等觸發 UI 及特別說明文字
-					default:
-						switch sec_string {
-							case "":	//不知節的時候，知章
-								print_string = Bible_print_string("啟","啟示錄", chap_string, "1","bklcl")
-							default:
-								print_string = Bible_print_string("啟","啟示錄", chap_string, sec_string,"bklcl")
-						}
-				}
-			default:
-				print_string = "聖經"
+	//case "w5":
+		//log.Print(reg.ReplaceAllString(text, "$3"))
+		//switch reg.ReplaceAllString(text, "$3") {
+			//case "Rev","Revelation","啟","啟示","啟示錄","Re","re","ｒｅ","Ｒｅ","rev","Откровение ап. Иоанна Богослова (Апокалипсис)","Khải-huyền","ヨハネの黙示録","黙示録","요한계시록":
+				//bible_short_name = "啟"
+				//switch chap_string {
+					//case "":
+						//print_string = "啟示錄"  //不知章節的時候 //用來等觸發 UI 及特別說明文字
+					//default:
+						//switch sec_string {
+							//case "":	//不知節的時候，知章
+							//	print_string = Bible_print_string("啟","啟示錄", chap_string, "1","bklcl")
+							//default:
+								//print_string = Bible_print_string("啟","啟示錄", chap_string, sec_string,"bklcl")
+					//	}
+				//}
+			//default:
+				//print_string = "聖經"
 				//print_string = "你是要找 " +  reg.ReplaceAllString(text, "$3") + " 對嗎？\n對不起，我還沒學呢...\n"
 		}
 	case "聖經","bible","Bible","ｂｉｂｌｅ","Ｂｉｂｌｅ":
@@ -932,7 +932,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				username = "LL"
 			case "U0a8152d2cea8c981aa2436a0ab596bca":
 				username = "K"
-			case "ub5e4ae027d8d4a82736222b2a8dc77df":
+			case "ub5e4ae027d8d4a82736222b2a6dc77df":
 				username = "包包"
 			case "Ca78bf89fa33b777e54b4c13695818f81":
 				username = "測試用全開群組 test"
@@ -2811,12 +2811,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 										// linebot.NewURITemplateAction("英文（KJV）","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=kjv"),
 										// linebot.NewURITemplateAction("日文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=jp"),
 									),
-									linebot.NewCarouse.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
-										linebot.NewPostbackTemplateAction("韓文聖經", "韓文聖經", "韓文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-										linebot.NewPostbackTemplateAction("越南聖經", "越南聖經", "越南聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-										linebotlColumn(
-										imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
-										//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
+									//linebot.NewCarouse.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
+									//	linebot.NewPostbackTemplateAction("韓文聖經", "韓文聖經", "韓文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
+									//	linebot.NewPostbackTemplateAction("越南聖經", "越南聖經", "越南聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
+									//	linebotlColumn(
+									//	imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
+									//	//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
 									),
 									linebot.NewCarouselColumn(
 										imageURL, "e1", "You can press the button to see。",
