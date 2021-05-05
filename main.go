@@ -2817,8 +2817,8 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 										// "中越對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=vietnamese\n\n" +
 										// "中俄對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=russian"
 								//temp_msg := bot_msg
-								obj_message := linebot.NewTemplateMessage(wordmode_str2, LineTemplate_find)
-								obj_message2 := linebot.NewTemplateMessage("你可以開最新版本的 LINE APP 有方便的按鈕可以使用。\n單獨輸入「聖經」可以知道查詢方法。\n\n" + wordmode_str, LineTemplate_find2)
+								//obj_message := linebot.NewTemplateMessage(wordmode_str2, LineTemplate_find)
+								//obj_message2 := linebot.NewTemplateMessage("你可以開最新版本的 LINE APP 有方便的按鈕可以使用。\n單獨輸入「聖經」可以知道查詢方法。\n\n" + wordmode_str, LineTemplate_find2)
 								//if _, err = bot.ReplyMessage(event.ReplyToken, obj_message2,obj_message,linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										//log.Print(7557)
 										//log.Print(err)
@@ -2901,23 +2901,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 													HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：" + send_title + `\n` + strings.Replace(bot_msg,"\n", `\n<br/>`, -1),target_id_code)
 													HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code,user_talk)
 												}
-										}
-								}else{
-									log.Print("bot_msg = " + bot_msg)
-									send_color := "yellow"
-									send_title := "查詢成功"
-									if bot_msg=="查詢章節超過聖經範圍，有可能指定查詢的節超過範圍。"{
-										send_color = "orange"
-										send_title = "查詢失敗，範圍超過。"
-									}
-									HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, send_color , "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code)
-									HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：" + send_title + `\n` + strings.Replace(bot_msg,"\n", `\n<br/>`, -1),target_id_code)
-									HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：" + send_title + `\n` + bot_msg,target_id_code,user_talk)
-								}
-								HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus + `查詢結果：\n` + bot_msg, "yellow" , "查詢成功",target_id_code)
-								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus + `查詢結果：\n` + bot_msg , "LINE 同步：查詢成功" ,target_id_code)
-								HttpPost_Zapier(target_item + "[" + user_talk + "](" + userImageUrl + ")" + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
-							}else{
 								//沒找到 reg_nofind.ReplaceAllString(bot_msg, "$1")=="我還沒學呢..."
 								//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										//log.Print(7650)
@@ -3150,10 +3133,10 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				obj_message := linebot.NewLocationMessage(message.Title, message.Address, message.Latitude, message.Longitude)
 				obj_message_map := linebot.NewLocationMessage("台北公館教會", "11677 台北市汀州路四段85巷2號", 25.007408,121.537688) //台北市信義區富陽街46號
 
-				//case 1
-				//obj_message_1 := linebot.NewLocationMessage("歡迎光臨", "地球", 25.022413, 121.556427) //台北市信義區富陽街46號
 					//obj_message_2 := linebot.NewLocationMessage("歡迎光臨", "哪個近", 25.022463, 121.556454) //這個遠
 
+				//case 1
+				//obj_message_1 := linebot.NewLocationMessage("歡迎光臨", "地球", 25.022413, 121.556427) //台北市信義區富陽街46號
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你在這裡？"),obj_message,linebot.NewTextMessage("我們教會在這裡～"),obj_message_map,linebot.NewStickerMessage("2", "514")).Do(); err != nil {
 					log.Print(1876)
 					log.Print(err)
