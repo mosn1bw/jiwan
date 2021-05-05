@@ -2819,10 +2819,10 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								//temp_msg := bot_msg
 								obj_message := linebot.NewTemplateMessage(wordmode_str2, LineTemplate_find)
 								obj_message2 := linebot.NewTemplateMessage("你可以開最新版本的 LINE APP 有方便的按鈕可以使用。\n單獨輸入「聖經」可以知道查詢方法。\n\n" + wordmode_str, LineTemplate_find2)
-								if _, err = bot.ReplyMessage(event.ReplyToken, obj_message2,obj_message,linebot.NewTextMessage(bot_msg)).Do(); err != nil {
-										log.Print(7557)
-										log.Print(err)
-										log.Print("linebot: APIError 400 The request body has 1 error(s)\n[messages[2].text] Length must be between 0 and 2000"==err.Error()) //bot_msg 位子換了所以變成 [2]
+								//if _, err = bot.ReplyMessage(event.ReplyToken, obj_message2,obj_message,linebot.NewTextMessage(bot_msg)).Do(); err != nil {
+										//log.Print(7557)
+										//log.Print(err)
+										//log.Print("linebot: APIError 400 The request body has 1 error(s)\n[messages[2].text] Length must be between 0 and 2000"==err.Error()) //bot_msg 位子換了所以變成 [2]
 										// //HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗" + `\n` + err.Error(),target_id_code)
 										// //HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" + `\n<br>` +  err.Error(),target_id_code)
 
@@ -2919,13 +2919,13 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								HttpPost_Zapier(target_item + "[" + user_talk + "](" + userImageUrl + ")" + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
 							}else{
 								//沒找到 reg_nofind.ReplaceAllString(bot_msg, "$1")=="我還沒學呢..."
-								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
-										log.Print(7650)
-										log.Print(err)
+								//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
+										//log.Print(7650)
+										//log.Print(err)
 								}
-								HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "orange" , "LINE 同步：查詢失敗",target_id_code)
-								HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：查詢失敗",target_id_code)
-								HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：查詢失敗",target_id_code,user_talk)
+								//HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "orange" , "LINE 同步：查詢失敗",target_id_code)
+								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：查詢失敗",target_id_code)
+								//HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：查詢失敗",target_id_code,user_talk)
 
 								//HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗",target_id_code)
 								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" ,target_id_code)
@@ -3040,7 +3040,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 					// 					}
 						//上面重覆兩段 push 用來證明 push 才可以連發訊息框，re 只能一個框
 					//---------------------這段可以跟 ReplyMessage 同時有效，但是只會在 1 對 1 有效。群組無效。---------
-			case *linebot.ImageMessage:
+			//case *linebot.ImageMessage:
 				// 				_, err := bot.SendText([]string{event.RawContent.Params[0]}, "Hi~\n歡迎加入 Delicious!\n\n想查詢附近或各地美食都可以LINE我呦！\n\n請問你想吃什麼?\nex:義大利麵\n\n想不到吃什麼，也可以直接'傳送目前位置訊息'")
 				// 				var img = "http://imageshack.com/a/img921/318/DC21al.png"
 				// 				_, err = bot.SendImage([]string{content.From}, img, img)
@@ -3052,7 +3052,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				// 					log.Print(err)
 				// 				}
 									//https://devdocs.line.me/en/#webhook-event-object
-				log.Print("對方丟圖片 message.ID = " + message.ID)
+				//log.Print("對方丟圖片 message.ID = " + message.ID)
 
 				//log.Print("對方丟圖片 linebot.EventSource = " + linebot.EventSource
 
@@ -3074,21 +3074,6 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 				// if markID == "ub5e4ae027d8d4a82736222b2a8dc77df"{
 				// 	username = "包包"
 				// }
-
-				//https://devdocs.line.me/en/#get-content
-				//[GAE/GoでLineBotをつくったよ〜 - ベーコンの裏](http://sun-bacon.hatenablog.com/entry/2016/10/10/233520)
-				content, err := bot.GetMessageContent(message.ID).Do()
-				if err != nil {
-					log.Print(2141)
-					log.Print(err)
-				}
-				defer content.Content.Close()
-				log.Print("content.ContentType = " + content.ContentType)
-				log.Print("content.ContentLength = ")
-				log.Print(content.ContentLength) //檔案大小??
-				log.Print("content.Content = ")
-				log.Print(content.Content)
-
 				//https://github.com/line/line-bot-sdk-go/blob/master/linebot/get_content_test.go
 				//ContentLength
 				//https://golang.org/pkg/image/jpeg/
@@ -3145,7 +3130,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
  					log.Print(1854)
  					log.Print(err)
  				}
-			case *linebot.AudioMessage:
+			//case *linebot.AudioMessage:
 				//下面都是 OK 的寫法，但是還是沒辦法取得...........
 				//另外因為現在這個專案不適合這樣玩
 				// originalContentURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/ok.m4a"
