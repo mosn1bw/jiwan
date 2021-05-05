@@ -2827,8 +2827,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 									),
 									// LineTemplate_other_example,
 									// LineTemplate_other,
-									LineTemplate_CarouselColumn_feedback,
-								)
+									//LineTemplate_CarouselColumn_feedback,
+								//)
 								//wordmode_str2 := //"e2\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=gebklhlruby\n\n" +
 										//"中文/台語對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby\n\n" +
 										//"中英對照\nhttp://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv\n\n"+
