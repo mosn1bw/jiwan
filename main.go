@@ -2797,18 +2797,25 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 									//	linebotlColumn(
 									//	imageURL, "e3", "共支援六種語言查詢！\n中、英、日、韓、越、俄，與多國聖經。",
 									//	//linebot.NewPostbackTemplateAction("俄文聖經", "俄文聖經", "俄文聖經：" + bible_short_name + " " + bible_chap + "：" + bible_sec),
-									),
-									linebot.NewCarouselColumn(
-										imageURL, "e1", "You can press the button to see。",{
-										//linebot.NewURITemplateAction("中文","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&sec=" + bible_sec + "&VERSION1=unv&VERSION2=kjv"),
-										linebot.NewURITemplateAction("台語","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=gebklhlruby"),
-										linebot.NewURITemplateAction("中英對照","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=kjv"),
-										linebot.NewURITemplateAction("中日對照","http://bible.fhl.net/new/read.php?chineses=" + bible_short_name + "&nodic=1&chap=" + bible_chap + "&TABFLAG=1&VERSION1=unv&VERSION2=jp"),
-									),
-								{
-							}
-						}
-										
+								
+				//2016.12.26+
+				if event.Postback.Data == "d10"{
+					template := linebot.NewCarouselTemplate(
+						linebot.NewCarouselColumn(
+							SystemImageURL, "請機器人離開群組", "你確定要請我離開嗎QAQ？\n如果確定請按下方按鈕 QQ",
+							linebot.NewPostbackTemplateAction("請機器人離開群組","離開群組", "機器人已經自動離開。\n如要加回來請找：\nhttps://line.me/R/ti/p/@bls5027d\n如要聯絡開發者請找：\nhttps://line.me/R/ti/p/@uwk0684z"),
+							//linebot.NewPostbackTemplateAction("請機器人離開群組","離開群組", "機器人已經自動離開。\n如要加回來請找：\nhttps://line.me/R/ti/p/@sjk2434l\n如要聯絡開發者請找：\nhttps://line.me/R/ti/p/@uwk0684z"),
+							LineTemplate_addme,
+							LineTemplate_chat,
+						),
+					)
+					obj_message := linebot.NewTemplateMessage("這是命令機器人自己離開群組的方法。\n這功能只支援 APP 使用。\n請用 APP 端查看下一步。", template)
+					if _, err = bot.ReplyMessage(event.ReplyToken, obj_message).Do(); err != nil {
+						log.Print(1225)
+						log.Print(err)
+					}
+				}
+
 			case *linebot.StickerMessage:
 				log.Print("message.PackageID = " + message.PackageID)
 				log.Print("message.StickerID = " + message.StickerID)
