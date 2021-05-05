@@ -3011,4 +3011,3 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 		}
 	}
 }
-
