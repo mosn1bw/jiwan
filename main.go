@@ -2738,19 +2738,264 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								}
 
 								
-				//特別處理過貼圖範圍外的貼圖
-				if (PackageID_int!=0){ && (PackageID_int<=4){{
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message_moto,obj_message).Do(); err != nil {{
-						log.Print(7806)
+		//觸發離開群組聊天
+		if event.Type == linebot.EventTypeLeave {
+				HttpPost_JANDI("被請離開 "  + user_talk , "gray" , "LINE 離開群組",target_id_code)
+				HttpPost_IFTTT("被請離開 "  + user_talk , "LINE 離開群組",target_id_code)
+				HttpPost_Zapier("被請離開 "  + user_talk , "LINE 離開群組",target_id_code,user_talk)
+				log.Print("觸發被踢出 " + user_talk +  " 群組")
+		}
+		//？？？？？
+			//https://admin-official.line.me/beacon/register
+			//https://devdocs.line.me/en/#line-beacon
+			//https://devdocs.line.me/ja/#line-beacon
+			//這個應用要有硬體
+		if event.Type == linebot.EventTypeBeacon {
+			HttpPost_JANDI(target_item + " " + "[" + user_talk + "](" + userImageUrl + ") 觸發 Beacon（啥鬼）" + `\n` + userStatus, "yellow" , "LINE 對話同步",target_id_code)
+			HttpPost_IFTTT(target_item + " " + user_talk + " 觸發 Beacon（啥鬼）" + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 對話同步",target_id_code)
+			HttpPost_Zapier(target_item + " " + "[" + user_talk + "](" + userImageUrl + ") 觸發 Beacon（啥鬼）" + `\n` + userStatus, "LINE 對話同步",target_id_code,user_talk)
+			log.Print(user_talk + " 觸發 Beacon（啥鬼）")
+		}
+		//觸發收到訊息
+		if event.Type == linebot.EventTypeMessage {
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+
+			case *linebot.ImageMessage:
+				log.Print("對方丟圖片 message.ID = " + message.ID)
+
+				//log.Print("對方丟圖片 linebot.EventSource = " + linebot.EventSource
+
+				//----------------------------------------------------------------取得使用者資訊的寫法
+				// source := event.Source
+
+				// userID := event.Source.UserID
+				// groupID := event.Source.GroupID
+				// RoomID := event.Source.RoomID
+				// markID := userID + groupID + RoomID
+				
+				// log.Print(source.UserID)
+				//----------------------------------------------------------------取得使用者資訊的寫法
+
+				// username := ""
+				// if markID == "U6f738a70b63c5900aa2c0cbbe0af91c4"{//if source.UserID == "U6f738a70b63c5900aa2c0cbbe0af91c4"{
+				// 	username = "LL = " + userID + groupID + RoomID //2016.12.20+
+				// }
+				// if markID == "Uf150a9f2763f5c6e18ce4d706681af7f"{
+				// 	username = "包包"
+				// }
+
+				//https://devdocs.line.me/en/#get-content
+				//[GAE/GoでLineBotをつくったよ〜 - ベーコンの裏](http://sun-bacon.hatenablog.com/entry/2016/10/10/233520)
+				content, err := bot.GetMessageContent(message.ID).Do()
+				if err != nil {
+					log.Print(2141)
+					log.Print(err)
+				}
+				defer content.Content.Close()
+				log.Print("content.ContentType = " + content.ContentType)
+				log.Print("content.ContentLength = ")
+				log.Print(content.ContentLength) //檔案大小??
+				log.Print("content.Content = ")
+				log.Print(content.Content)
+
+				//https://github.com/line/line-bot-sdk-go/blob/master/linebot/get_content_test.go
+				//ContentLength
+				//https://golang.org/pkg/image/jpeg/
+
+				//目標是把 content.Content 存起來
+
+                image, err := jpeg.Decode(content.Content)
+                if err != nil {
+                	log.Print(2167)
+                    log.Print(err)
+                }
+                log.Printf("image %v", image.Bounds())
+                //http://ithelp.ithome.com.tw/articles/10161612
+                //https://webcache.googleusercontent.com/search?q=cache:cLTwZS5RNmMJ:https://libraries.io/go/github.com%252Fline%252Fline-bot-sdk-go%252Flinebot+&cd=6&hl=zh-TW&ct=clnk&gl=tw
+
+
+
+				var imgByte []byte
+				imgByte, err = ioutil.ReadAll(content.Content)
+				if err != nil {
+					log.Print(err)
+				}
+
+				log.Print(imgByte)
+
+                //暫時放棄 = =
+
+									// file, err := ioutil.TempFile("temp.jpg", "")
+									// if err != nil {
+									// 	log.Print(2175)
+									// 	log.Print(err)
+									// }
+									// defer file.Close()
+									
+									// _, err = ioutil.WriteFile("temp.jpg", []byte(image.Bounds()), 0600)//io.Copy(file, content.Content)
+									// if err != nil {
+									// 	log.Print(2182)
+									// 	log.Print(err)
+									// }
+									// log.Printf("Saved %s", file.Name())
+
+
+                //可以
+				// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這圖片是？\n\n" + username + "你丟給我圖片幹嘛！\n我眼睛還沒長好看不懂XD")).Do(); err != nil {
+				// 	log.Print(1845)
+				// 	log.Print(err)
+				// }
+			case *linebot.VideoMessage:
+				// //https://github.com/dongri/line-bot-sdk-go
+			 //    originalContentURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/video-original.mp4"
+			 //    previewImageURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/video-preview.png"
+			 //    obj_message := linebot.NewVideoMessage(originalContentURL, previewImageURL)
+ 			// 	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這影片是？\n我也給你影片吧！\n\n這只是測試功能"),obj_message).Do(); err != nil {
+ 			// 		log.Print(1854)
+ 			// 		log.Print(err)
+ 			// 	}
+			case *linebot.AudioMessage:
+				// //下面都是 OK 的寫法，但是還是沒辦法取得...........
+				// //另外因為現在這個專案不適合這樣玩
+				// originalContentURL := "https://dl.dropboxusercontent.com/u/358152/linebot/resource/ok.m4a"
+				// duration := 1000
+				// obj_message := linebot.NewAudioMessage(originalContentURL, duration)
+ 			// 	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("這是什麼聲音？"),obj_message).Do(); err != nil {
+ 			// 		log.Print(1862)
+ 			// 		log.Print(err)
+ 			// 	}
+			case *linebot.LocationMessage:
+				log.Print("message.Title = " + message.Title)
+				log.Print("message.Address = " + message.Address)
+				log.Print("message.Latitude = ")
+				log.Print(message.Latitude)
+				log.Print("message.Longitude = ")
+				log.Print(message.Longitude)
+				
+				target_x := "25.007408"
+				target_y := "121.537688"
+				//obj_message := linebot.NewLocationMessage(message.Title, message.Address, message.Latitude, message.Longitude)
+				obj_message_map := linebot.NewLocationMessage("台北ＯＯＯ", "11677 台北市汀州路四段85巷2號", " + target_x + "," + target_y + ") //台北市信義區富陽街46號
+
+
+
+				//case 1
+				//obj_message_1 := linebot.NewLocationMessage("歡迎光臨", "地球", 25.022413, 121.556427) //台北市信義區富陽街46號
+					//obj_message_2 := linebot.NewLocationMessage("歡迎光臨", "哪個近", 25.022463, 121.556454) //這個遠
+
+				//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你好！小天使來幫你帶路！\n你在這裡？\n要看看附近的教會嗎？\nhttps://www.google.com/maps/search/%E6%95%99%E6%9C%83/@" + fmt.Sprintf("%f",message.Latitude) + "%2C" + fmt.Sprintf("%f",message.Longitude) + ",15z\n以下是我剛剛收到的 GPS 定位地址！"),obj_message,linebot.NewTextMessage("我們教會在這裡～\n為您預備導航路線圖：\nhttp://maps.google.com/maps?f=d&saddr=" + fmt.Sprintf("%f",message.Latitude) + "," + fmt.Sprintf("%f",message.Longitude) + "&daddr=" + target_x + "," + target_y + "&hl=zh-tw&dirflg=&sort=num&mrsp=0&doflg=ptk&ttype=now\n以下是我們教會的確切地址！"),obj_message_map,linebot.NewStickerMessage("2", "514")).Do(); err != nil {
+				if target_item == "群組對話"{
+					LineTemplate_address := linebot.NewCarouselTemplate(
+						linebot.NewCarouselColumn(
+							imageURL, "我來幫你帶路！", "你在「" + message.Address + "」？",
+//							linebot.NewURITemplateAction("看看附近的教會？", "https://www.google.com/maps/search/%E6%95%99%E6%9C%83/@" + fmt.Sprintf("%f",message.Latitude) + "%2C" + fmt.Sprintf("%f",message.Longitude) + ",15z"),
+							linebot.NewURITemplateAction("帶你去ＯＯＯ","http://maps.google.com/maps?f=d&saddr=" + fmt.Sprintf("%f",message.Latitude) + "," + fmt.Sprintf("%f",message.Longitude) + "&daddr=" + target_x + "," + target_y + "&hl=zh-tw&dirflg=&sort=num&mrsp=0&doflg=ptk&ttype=now"),
+							linebot.NewPostbackTemplateAction("ＯＯＯ地圖","ＯＯＯ地圖 POST", "教會地圖"),
+						),
+						// LineTemplate_other_example,
+						// LineTemplate_other,
+						LineTemplate_CarouselColumn_feedback,
+					)
+					t_address := "帶你去ＯＯＯ！\nhttp://maps.google.com/maps?f=d&saddr=" + fmt.Sprintf("%f",message.Latitude) + "," + fmt.Sprintf("%f",message.Longitude) + "&daddr=" + target_x + "," + target_y + "&hl=zh-tw&dirflg=&sort=num&mrsp=0&doflg=ptk&ttype=now"
+					obj_message_address := linebot.NewTemplateMessage(t_address, LineTemplate_address)
+					if _, err = bot.ReplyMessage(
+						event.ReplyToken, 
+						//linebot.NewStickerMessage("2", "514"),
+						//linebot.NewTextMessage("你好！小天使來幫你帶路！\n你在「" + message.Address + "」？\n要看看附近的教會嗎？\nhttps://www.google.com/maps/search/%E6%95%99%E6%9C%83/@" + fmt.Sprintf("%f",message.Latitude) + "%2C" + fmt.Sprintf("%f",message.Longitude) + ",15z"),
+						// obj_message,
+						//linebot.NewTextMessage("我們教會在這裡～\n為您預備導航路線圖：\nhttp://maps.google.com/maps?f=d&saddr=" + fmt.Sprintf("%f",message.Latitude) + "," + fmt.Sprintf("%f",message.Longitude) + "&daddr=" + target_x + "," + target_y + "&hl=zh-tw&dirflg=&sort=num&mrsp=0&doflg=ptk&ttype=now\n下面是我們教會的地圖！"),
+						//obj_message_map,
+						obj_message_address,
+					).Do(); err != nil {
+						log.Print(18766)
 						log.Print(err)
 					}
-				}else{{
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("．ω．"),obj_message).Do(); err != nil {
-						log.Print(7811)
+				}else{
+					if _, err = bot.ReplyMessage(
+						event.ReplyToken, 
+						linebot.NewStickerMessage("2", "514"),
+						linebot.NewTextMessage("你好！小天使來幫你帶路！\n你在「" + message.Address + "」？\n要看看附近的教會嗎？\nhttps://www.google.com/maps/search/%E6%95%99%E6%9C%83/@" + fmt.Sprintf("%f",message.Latitude) + "%2C" + fmt.Sprintf("%f",message.Longitude) + ",15z"),
+						// obj_message,
+						linebot.NewTextMessage("我們教會在這裡～\n為您預備導航路線圖：\nhttp://maps.google.com/maps?f=d&saddr=" + fmt.Sprintf("%f",message.Latitude) + "," + fmt.Sprintf("%f",message.Longitude) + "&daddr=" + target_x + "," + target_y + "&hl=zh-tw&dirflg=&sort=num&mrsp=0&doflg=ptk&ttype=now\n下面是我們教會的地圖！"),
+						obj_message_map,
+					).Do(); err != nil {
+						log.Print(1876)
 						log.Print(err)
-					}					
+					}
+				}
+			case *linebot.StickerMessage:
+				log.Print("message.PackageID = " + message.PackageID)
+				log.Print("message.StickerID = " + message.StickerID)
+					//https://github.com/line/line-bot-sdk-go/blob/master/examples/kitchensink/server.go handleSticker
+					//message.PackageID, message.StickerID
+				//丟跟對方一樣的貼圖回他
+			// obj_message_moto := linebot.NewStickerMessage(message.PackageID, message.StickerID)
+					//https://github.com/line/line-bot-sdk-go/blob/master/examples/kitchensink/server.go
+					//2016.12.20+ 多次框框的方式成功！（最多可以五個）
+					//.NewStickerMessage 發貼貼圖成功	 //https://devdocs.line.me/files/sticker_list.pdf			
+				obj_message := linebot.NewStickerMessage("2", "514") //https://devdocs.line.me/en/?go#send-message-object
+ 				//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("OU<"),linebot.NewTextMessage("0.0"),linebot.NewTextMessage("．ω．"),linebot.NewTextMessage("．ω．")).Do(); err != nil {
+
+				PackageID_int := 0
+				StickerID_int := 0
+				if PackageID_int, err = strconv.Atoi(message.PackageID); err != nil {
+					log.Print("7793 字串轉整數失敗")
+					log.Print(PackageID_int)
+					log.Print(err.Error())
+				}
+
+				if StickerID_int, err = strconv.Atoi(message.StickerID); err != nil {
+					log.Print("7798 字串轉整數失敗")
+					log.Print(StickerID_int)
+					log.Print(err.Error())
+				}
+
+	//指令集
+						case (uid==admin)&&Contains(message.Text,"/join "):
+							s:=0
+							var profile2 []string
+							for s<=len(user_array)-1{
+								var menu []string
+								menu = strings.Split(user_array[e], " & ")
+								if menu[0] == strings.Replace(message.Text, "/join ", "", -1){
+									profile2 = strings.Split(user_array[e], " & ")
+									break
+								}
+								e++
+							}
+							bot.PushMessage(strings.Replace(message.Text, "/join ", "", -1),linebot.NewTextMessage(profile2[2] + "你好，已經幫你加入菜市場會員了，你現在可以開始買菜囉!!")).Do() 
+						case (uid==admin)&&Contains(message.Text,"/nojoin "):
+							bot.PushMessage(strings.Replace(message.Text, "/nojoin ", "", -1),linebot.NewTextMessage("經過我們的審核，你輸入的資料好像有點問題耶，可以請你重新申請一次嗎? 直接傳訊息說 我要加入 就可以了")).Do() 
+						case (uid==admin)&&Contains(message.Text,"/w "):
+							conn = strings.Replace(message.Text, "/w ", "", -1)
+							for e<=len(user_array){
+								var menu []string
+								menu = strings.Split(user_array[e], " & ")
+								if menu[1] == conn{
+									profile = strings.Split(user_array[e], " & ")
+									conn = profile[0]
+									break
+								}
+								e++
+							}
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("已成功與" + profile[2] + "連結，可以直接傳訊息開始通訊")).Do() 
+							bot.PushMessage(conn,linebot.NewTextMessage("老闆出現囉! 你現在可以跟他傳訊息了")).Do() 
+	//以下是喇賽的code
+						case Contains(message.Text,"母牛")||Contains(message.Text,"洗眼")||Contains(message.Text,"乳牛")||Contains(message.Text,"淨化"):
+							bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(cow,cow)).Do() 
+						case Contains(message.Text,"刀塔"):
+							bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(url + "6569950-1490833625.jpg", url + "6569950-1490833625.jpg")).Do() 
+						case Contains(message.Text,"黑人問號"):
+							bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(url + "blackman.jpg", url + "blackman.jpg")).Do() 					
+					}
 				}
 			}
+
 		}
 	}
+}
+
+func Contains(s, substr string) bool {
+     return Index(s, substr) != -1
 }
