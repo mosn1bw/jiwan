@@ -2844,7 +2844,7 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot_msg)).Do(); err != nil {
 										//log.Print(7650)
 										//log.Print(err)
-								}
+								//}
 								//HttpPost_JANDI(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "orange" , "LINE 同步：查詢失敗",target_id_code)
 								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus, "LINE 同步：查詢失敗",target_id_code)
 								//HttpPost_Zapier(target_item + " [" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "LINE 同步：查詢失敗",target_id_code,user_talk)
@@ -2852,8 +2852,8 @@ func bible(text string,user_msgid string,reply_mode string) (string, string, str
 								//HttpPost_JANDI(target_item + "[" + user_talk + "](" + userImageUrl + ")：" + message.Text + `\n` + userStatus, "red" , "查詢失敗",target_id_code)
 								//HttpPost_IFTTT(target_item + " " + user_talk + "：" + message.Text + `\n<br>` + userImageUrl + `\n<br>` + userStatus , "LINE 同步：查詢失敗" ,target_id_code)
 								//HttpPost_Zapier("[" + user_talk + "](" + userImageUrl + ") 觸發了按鈕並呼了 event.Postback.Data = " + message.Text + `\n` + userStatus, "LINE 程式觀察" ,target_id_code,user_talk)
-							}
-					}
+							//}
+					//}
 					//2016.12.22+ 利用正則分析字串結果，來設置觸發找開發者的時候要 + 的 UI  //不能用 bot_msg == 開發者，因為 bot_msg 早就被改寫成一串廢話。
 					// if reg_loking_for_admin.ReplaceAllString(bot_msg,"$1") == "你找我的製造者？OK！"{
 
